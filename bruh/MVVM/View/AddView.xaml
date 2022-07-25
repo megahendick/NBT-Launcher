@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
+		     xmlns:xfc="clr-namespace:XamlFlair.Controls;assembly=XamlFlair.WPF"
              xmlns:local="clr-namespace:bruh.MVVM.View"
              mc:Ignorable="d"
              Margin="0,0"
@@ -29,7 +31,14 @@
         <Border CornerRadius="10"
                                 Margin="369,455,196,27">
 
-            <Button Click="AddNBTButton_Click" x:Name="AddNBTButton" Content="Add NBT" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="171" Height="58" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Foreground="GhostWhite" RenderTransformOrigin="0.632,0.523">
+            <Button Click="AddNBTButton_Click" 
+                    x:Name="AddNBTButton" Content="Add NBT"
+                    FontSize="18" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Width="171" Height="58"
+                    HorizontalContentAlignment="Center"
+                    BorderBrush="{x:Null}"
+                    Foreground="GhostWhite">
+
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="Transparent"/>
@@ -91,7 +100,7 @@
         <Border CornerRadius="10"
                                 Margin="10,121,409,383">
 
-            <Button Click="FindFileButton_Click" x:Name="FindFileButton" Content="Find NBT" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="318" Height="34" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Foreground="GhostWhite">
+            <Button Click="FindFileButton_Click" x:Name="FindFileButton" Content="Find NBT" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="318" Height="36" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Foreground="GhostWhite">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="Transparent"/>
@@ -122,7 +131,7 @@
         <Border CornerRadius="10"
                                 Margin="252,354,287,136">
 
-            <Button Click="FindImageButton_Click" x:Name="FindImageButton" Content="Find Image" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Width="198" Height="47" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Foreground="GhostWhite" Margin="0,2,0,0">
+            <Button Click="FindImageButton_Click" x:Name="FindImageButton" Content="Find Image" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="198" Height="49" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Foreground="GhostWhite">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="Transparent"/>

@@ -119,6 +119,30 @@ namespace bruh.MVVM.View
 
         public void AddNBTButton_Click(object sender, RoutedEventArgs e)
         {
+            FindFileButton.Background = Brushes.Transparent;
+            FindImageButton.Background = Brushes.Transparent;
+            color1.Background = Brushes.Transparent;
+            color2.Background = Brushes.Transparent;
+            if ((string)FindImageButton.Content == null || (string)FindImageButton.Content == "Find Image")
+            {
+                FindImageButton.Background = Brushes.Red;
+                return;
+            }
+            if ((string)FindFileButton.Content == null || (string)FindFileButton.Content == "Find NBT")
+            {
+                FindFileButton.Background = Brushes.Red;
+                return;
+            }
+            if (color1.Text.Length != 7 || !color1.Text.StartsWith("#"))
+            {
+                color1.Background = Brushes.Red;
+                return;
+            }
+            if (color2.Text.Length != 7 || !color2.Text.StartsWith("#"))
+            {
+                color2.Background = Brushes.Red;
+                return;
+            }
             File.Move(nbtpath, $"C:/NBT-Launcher/Nbts/{nbtname}.txt");
 
             File.Move(imagepath, $"C:/NBT-Launcher/Images/{imagename}.png");
