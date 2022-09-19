@@ -10,6 +10,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
+        Icon="Images/Logo_500x500_px1.ico"
         AllowsTransparency="True">
 
     <Window.DataContext>
@@ -171,13 +172,20 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding MiscViewCommand}"
                              FontFamily="/Font/#Poppins"/>
+                <RadioButton Content="NBT Templates "
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding TestViewCommand}"
+                             FontFamily="/Font/#Poppins"/>
                 <RadioButton Content="Add NBTs"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding AddViewCommand}"
-                             FontFamily="/Font/#Poppins"/>
+                             FontFamily="/Font/#Poppins"/>                
             </StackPanel>
 
             <ContentControl

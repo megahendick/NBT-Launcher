@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
              xmlns:local="clr-namespace:bruh"
              xmlns:viewModel="clr-namespace:bruh.MVVM.ViewModel"
-             xmlns:view="clr-namespace:bruh.MVVM.View" xmlns:xf1="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
+             xmlns:view="clr-namespace:bruh.MVVM.View"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF">
+        <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>

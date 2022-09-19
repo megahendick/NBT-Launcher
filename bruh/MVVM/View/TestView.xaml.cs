@@ -20,6 +20,8 @@ namespace bruh.MVVM.View
     /// <summary>
     /// Interaction logic for TestView.xaml
     /// </summary>
+    /// 
+
     public partial class TestView : UserControl
     {
         public class jsonShit
@@ -31,6 +33,7 @@ namespace bruh.MVVM.View
             public string Color2 { get; set; }
             public string imagePath { get; set; }
             public string nbtPath { get; set; }
+            public List<List<object>> template { get; set; }
         }
 
         public TestView()
@@ -69,13 +72,15 @@ namespace bruh.MVVM.View
                 new GradientStop((Color)System.Windows.Media.ColorConverter.ConvertFromString("#393939"), 1.0));
 
 
+            Dictionary<string, string> templateList = new Dictionary<string, string>();
+
             string[] files = Directory.GetFiles(@"C:/NBT-Launcher/Json", "*.json");
             foreach (var file in files)
             {
                 string filename = System.IO.Path.GetFileNameWithoutExtension(file);
                 string jsonString = File.ReadAllText($"C:/NBT-Launcher/Json/{filename}.json");
                 jsonShit nbtInfo = JsonSerializer.Deserialize<jsonShit>(jsonString);
-                if (nbtInfo.NbtType == "Test")
+                if (nbtInfo.NbtType == "Template")
                 {
 
                     LinearGradientBrush backgroundBrush =
@@ -163,13 +168,183 @@ namespace bruh.MVVM.View
                     buttonCopy.BorderBrush = null;
                     buttonCopy.Content = "Copy to Clipboard";
                     buttonCopy.FontSize = 16;
-                    buttonCopy.Foreground = Brushes.GhostWhite;
-                    buttonCopy.Click += button_Click;
+                    buttonCopy.Foreground = Brushes.GhostWhite;                  
                     buttonCopy.MouseEnter += ButtonCopy_MouseEnter;
                     buttonCopy.MouseLeave += ButtonCopy_MouseLeave;
                     Style style = Application.Current.FindResource("ButtonHover") as Style;
                     buttonCopy.Style = style;
                     buttonBorder.Child = buttonCopy;
+
+                    //////////////////////////////////////////////////////// new window /////////////////////////////////////////////////////////
+
+                    // background
+                    Border backgroundBorder = new Border();
+                    backgroundBorder.Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 };
+                    backgroundBorder.Visibility = Visibility.Hidden;
+                    backgroundBorder.CornerRadius = new CornerRadius(10);
+                    grid.Children.Add(backgroundBorder);
+
+                    // inputBorder
+                    Border inputBorder = new Border();
+                    inputBorder.Width = 300;
+                    inputBorder.Height = 400;
+                    inputBorder.Background = new SolidColorBrush((Color)System.Windows.Media.ColorConverter.ConvertFromString("#1b1b1b"));
+                    inputBorder.CornerRadius = new CornerRadius(10);
+                    backgroundBorder.Child = inputBorder;
+
+                    // input grid
+                    Grid inputGrid = new Grid();
+                    inputBorder.Child = inputGrid;
+
+                    // doneButton
+                    Border donebuttonBorder = new Border();
+                    donebuttonBorder.CornerRadius = new CornerRadius(10);
+                    donebuttonBorder.Height = 30;
+                    donebuttonBorder.Width = 100;
+                    donebuttonBorder.Margin = new Thickness(0, 0, 30, 10);
+                    donebuttonBorder.Background = copyButtonBrush;
+                    donebuttonBorder.VerticalAlignment = VerticalAlignment.Bottom;
+                    donebuttonBorder.HorizontalAlignment = HorizontalAlignment.Right;
+                    inputGrid.Children.Add(donebuttonBorder);
+
+                    Button doneButton = new Button();
+                    doneButton.Background = Brushes.Transparent;
+                    doneButton.BorderBrush = null;
+                    doneButton.Content = "Done";
+                    doneButton.FontSize = 14;
+                    doneButton.Foreground = Brushes.GhostWhite;
+                    doneButton.MouseEnter += doneButton_MouseEnter;
+                    doneButton.MouseLeave += doneButton_MouseLeave;
+                    doneButton.Style = style;
+                    donebuttonBorder.Child = doneButton;
+
+                    // Canel Button
+                    Border cancelButtonBorder = new Border();
+                    cancelButtonBorder.CornerRadius = new CornerRadius(10);
+                    cancelButtonBorder.Height = 30;
+                    cancelButtonBorder.Width = 100;
+                    cancelButtonBorder.Margin = new Thickness(30, 0, 0, 10);
+                    cancelButtonBorder.Background = copyButtonBrush;
+                    cancelButtonBorder.VerticalAlignment = VerticalAlignment.Bottom;
+                    cancelButtonBorder.HorizontalAlignment = HorizontalAlignment.Left;
+                    inputGrid.Children.Add(cancelButtonBorder);
+
+                    Button cancelButton = new Button();
+                    cancelButton.Background = Brushes.Transparent;
+                    cancelButton.BorderBrush = null;
+                    cancelButton.Content = "Cancel";
+                    cancelButton.FontSize = 14;
+                    cancelButton.Foreground = Brushes.GhostWhite;
+                    cancelButton.MouseEnter += cancelButton_MouseEnter;
+                    cancelButton.MouseLeave += cancelButton_MouseLeave;
+                    cancelButton.Click += cancel_Click;
+                    cancelButton.Style = style;
+                    cancelButtonBorder.Child = cancelButton;
+
+                    // scroll viewer and stack pannel
+                    ScrollViewer inputScrollViewer = new ScrollViewer();
+                    inputScrollViewer.Margin = new Thickness(5, 5, 5, 60);
+                    inputScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                    inputGrid.Children.Add(inputScrollViewer);
+                    StackPanel inputStackPanel = new StackPanel();
+                    inputStackPanel.VerticalAlignment = VerticalAlignment.Top;
+                    inputStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                    inputScrollViewer.Content = inputStackPanel;
+
+                    
+
+                    for (int i = 0; i < nbtInfo.template.Count; i++)
+                    {
+                        var elementValue0 = (nbtInfo.template[i] == null)
+                        ? "<missing>"
+                        : nbtInfo.template[i][0].ToString();
+
+                        var elementValue1 = (nbtInfo.template[i] == null)
+                        ? "<missing>"
+                        : nbtInfo.template[i][1].ToString();
+
+                        var elementValue2 = (nbtInfo.template[i] == null)
+                        ? "<missing>"
+                        : nbtInfo.template[i][2].ToString();
+                        // Text Grid
+                        Grid textGrid = new Grid();
+                        textGrid.Width = 250;
+                        textGrid.Height = 60;
+                        inputStackPanel.Children.Add(textGrid);
+
+                        // Text Block
+                        TextBlock textBlock = new TextBlock();
+                        textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                        textBlock.VerticalAlignment = VerticalAlignment.Top;
+                        textBlock.Text = elementValue0;
+                        textBlock.Foreground = Brushes.GhostWhite;
+                        textBlock.FontSize = 16;
+                        textGrid.Children.Add(textBlock);
+
+                        // Text Border
+                        Border textBorder = new Border();
+                        textBorder.CornerRadius = new CornerRadius(5);
+                        textBorder.Background = copyButtonBrush;
+                        textBorder.Height = 30;
+                        textBorder.Width = 250;
+                        textBorder.VerticalAlignment = VerticalAlignment.Bottom;
+
+                        string text2 = elementValue1;
+
+                        //Text Box
+                        TextBox testText = new TextBox();
+                        testText.Background = Brushes.Transparent;
+                        testText.Foreground = Brushes.GhostWhite;
+                        testText.BorderThickness = new Thickness(0);
+                        testText.VerticalContentAlignment = VerticalAlignment.Center;
+                        testText.FontSize = 16;
+                        testText.Text = elementValue1;
+                        textBorder.Child = testText;
+                        testText.TextChanged += TestText_TextChanged;
+                        testText.Initialized += TestText_Initialized;
+                        doneButton.Click += done_Click;
+                        textGrid.Children.Add(textBorder);
+
+                        
+
+                        void TestText_Initialized(object sender, EventArgs e)
+                        {
+                            text2 = elementValue1;
+                            try
+                            {
+                                templateList.Add(elementValue2, "1234");
+                            }
+                            catch (ArgumentException)
+                            {
+                                templateList.Remove(elementValue2);
+                                templateList.Add(elementValue2, "1234");
+                            }
+                        }                     
+
+                        void TestText_TextChanged(object sender, TextChangedEventArgs e)
+                        {
+                            text2 = testText.Text;
+
+                            if (string.IsNullOrEmpty(text2))
+                            {
+                                text2 = elementValue1;
+                            }
+                            
+                            try
+                            {
+                                templateList.Add(elementValue2, text2);
+                            }
+                            catch (ArgumentException)
+                            {
+                                templateList.Remove(elementValue2);
+                                templateList.Add(elementValue2, text2);
+                            }
+                        }
+                    }
+                    
+
+
+                    buttonCopy.Click += button_Click;
 
                     void ButtonCopy_MouseEnter(object sender, MouseEventArgs e)
                     {
@@ -183,10 +358,55 @@ namespace bruh.MVVM.View
                         buttonBorder.Background = copyButtonBrush;
                     }
 
+                    void doneButton_MouseEnter(object sender, MouseEventArgs e)
+                    {
+                        doneButton.Background = Brushes.Transparent;
+                        doneButton.BorderBrush = null;
+                        donebuttonBorder.Background = copyButtonBrushEnter;
+                    }
+
+                    void doneButton_MouseLeave(object sender, MouseEventArgs e)
+                    {
+                        donebuttonBorder.Background = copyButtonBrush;
+                    }
+
+                    void cancelButton_MouseEnter(object sender, MouseEventArgs e)
+                    {
+                        cancelButton.Background = Brushes.Transparent;
+                        cancelButton.BorderBrush = null;
+                        cancelButtonBorder.Background = copyButtonBrushEnter;
+                    }
+
+                    void cancelButton_MouseLeave(object sender, MouseEventArgs e)
+                    {
+                        cancelButtonBorder.Background = copyButtonBrush;
+                    }
+
                     void button_Click(object sender, RoutedEventArgs e)
                     {
-                        string nbt = System.IO.File.ReadAllText(nbtInfo.nbtPath);
-                        Clipboard.SetText(nbt);
+                        backgroundBorder.Visibility = Visibility.Visible;
+                        templateList.Clear();
+                    }
+
+                    void done_Click(object sender, RoutedEventArgs e)
+                    {
+                        //string newnbt = System.IO.File.ReadAllText($@"C:\Users\Thomas\Downloads\nuke.txt");
+                        string newnbt = System.IO.File.ReadAllText($@"C:/NBT-Launcher/Nbts/{nbtInfo.nbtPath}");
+                        foreach (KeyValuePair<string, string> templateText in templateList)
+                        {
+                            newnbt = newnbt.Replace(templateText.Key, templateText.Value);
+                        }
+
+                        
+                        Clipboard.SetText(newnbt);
+                        backgroundBorder.Visibility = Visibility.Hidden;
+                        //File.WriteAllText($@"C:\Users\Thomas\Downloads\nuke2.txt", newnbt);
+                    }
+
+                    void cancel_Click(object sender, RoutedEventArgs e)
+                    {
+                        backgroundBorder.Visibility = Visibility.Hidden;
+                        templateList.Clear();
                     }
                 }
             }

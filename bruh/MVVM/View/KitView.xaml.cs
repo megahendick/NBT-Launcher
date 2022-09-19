@@ -185,8 +185,10 @@ namespace bruh.MVVM.View
 
                     void button_Click(object sender, RoutedEventArgs e)
                     {
+                        buttonCopy.IsEnabled = false;
                         string nbt = System.IO.File.ReadAllText($@"C:/NBT-Launcher/Nbts/{nbtInfo.nbtPath}");
                         Clipboard.SetText(nbt);
+                        buttonCopy.IsEnabled = true;
                     }
                 }
             }
